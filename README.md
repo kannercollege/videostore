@@ -15,5 +15,5 @@ pip install -r requirements.txt
 # usage
 
 ```sh
-./main.py
+./run.sh
 ```
