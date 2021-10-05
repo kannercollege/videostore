@@ -1,4 +1,4 @@
-name: CI
+name: black-format
 
 on:
   push:
