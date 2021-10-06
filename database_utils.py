@@ -43,6 +43,4 @@ def setup_databases():
 
         _check()
     except FileExistsError:
-        logging.info(
-            "/databases already exists, delete it if you want to restart setup"
-        )
+        pass
