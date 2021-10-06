@@ -1,7 +1,5 @@
 import json
-import logging
 from pathlib import Path
-from sys import stderr
 
 DATABASES_DIRECTORY = Path("databases/")
 PRODUCTS_DATABASE_FILENAME = DATABASES_DIRECTORY / "db_products.json"
