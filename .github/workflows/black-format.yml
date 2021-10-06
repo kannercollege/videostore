@@ -23,7 +23,7 @@ jobs:
         if: failure()
         run: |
           black .
-          git config --global user.name 'autoblack'
-          git config --global user.email 'cclauss@users.noreply.github.com'
+          git config --global user.name 'Skycloudd'
+          git config --global user.email '51929172+Skycloudd@users.noreply.github.com'
           git commit -am "fixup: Format Python code with Black"
           git push origin HEAD
