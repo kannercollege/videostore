@@ -15,12 +15,14 @@
 
 {% for product in products %}
 <div class="product_display_item">
-    <span class=product_display_name>
-        {{ product.name }}
-    </span>
-    <span class=product_display_price>
-        {{ "€{:.2f}".format(product.price|float) }}
-    </span>
+    <a href="{{ url_for('view_product', product_id=product.id) }}">
+        <span class=product_display_name>
+            {{ product.name }}
+        </span>
+        <span class=product_display_price>
+            {{ "€{:.2f}".format(product.price|float) }}
+        </span>
+    </a>
 </div>
 {% endfor %}
 {% endblock %}
