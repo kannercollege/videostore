@@ -4,3 +4,9 @@
     border: 1px solid forestgreen;
     padding: 8px;
 }
+
+.product_display_image {
+    margin: 32px 0px;
+    padding: 32px;
+    border: 2px solid black;
+}
