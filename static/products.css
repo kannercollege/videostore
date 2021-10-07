@@ -1,0 +1,10 @@
+div.product_display_item {
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid forestgreen;
+}
+
+span.product_display_price {
+    color: crimson;
+    font-size: medium;
+}

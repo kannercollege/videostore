@@ -1,6 +1,9 @@
+import json
+
 from flask import Flask, render_template
 
-from database_utils import setup_databases
+from database_utils import PRODUCTS_DATABASE_FILENAME, setup_databases
+from product import Product
 from utils import setup_logging
 
 logger = setup_logging()
@@ -18,4 +21,12 @@ def index():
 
 @app.route("/products")
 def products():
-    return render_template("products.html")
+    with PRODUCTS_DATABASE_FILENAME.open("r") as f:
+        data = json.load(f)
+
+    products = [
+        Product(product["id"], product["name"], product["price"])
+        for product in data["products"]
+    ]
+
+    return render_template("products.html", products=products)

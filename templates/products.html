@@ -3,8 +3,24 @@
 
 {% block title %}Products{% endblock %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='products.css') }}">
+{% endblock %}
+
 {% block content %}
 <h1>
     Available products
 </h1>
+
+{% for product in products %}
+<div class="product_display_item">
+    <span class=product_display_name>
+        {{ product.name }}
+    </span>
+    <span class=product_display_price>
+        {{ "€{:.2f}".format(product.price|float) }}
+    </span>
+</div>
+{% endfor %}
 {% endblock %}
