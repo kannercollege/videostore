@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% set active_page = "products" %}
+
+{% block title %}{{ product.name|truncate(35, False, '...', 10) }}{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='view_product.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='previous_button.css') }}">
+{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('products') }}" class="previous">&laquo; Back</a>
+
+<div class="product_display_item">
+    <h1 class=product_display_name_large>
+        {{ product.name }}
+    </h1>
+    <a class=product_display_price href="{{ url_for('buy') }}">
+        {{ "Buy for €{:.2f}".format(product.price|float) }}
+    </a>
+</div>
+{% endblock %}
