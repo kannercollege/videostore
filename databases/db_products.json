@@ -1,3 +1,29 @@
 {
-    "products": []
+    "products": [
+        {
+            "id": 0,
+            "name": "Sony P6120HMPR/2C 2-Pack 120-Minute Hi8 Tape with Hangtab",
+            "price": 39.86
+        },
+        {
+            "id": 1,
+            "name": "Fujifilm P6-120 Hi 8MM (1-Pack)",
+            "price": 12.98
+        },
+        {
+            "id": 2,
+            "name": "2-pack 120min Hi 8 Video Tape (Discontinued by Manufacturer)",
+            "price": 28.08
+        },
+        {
+            "id": 3,
+            "name": "Sony MP 8mm Video Cassette Standard Grade 120 min (2 Pack)",
+            "price": 28.56
+        },
+        {
+            "id": 4,
+            "name": "Sony Hi 8mm HMP Metal Particle Video Tape (120 Min.) Audio Cassette-Tape, 2-Pack",
+            "price": 41
+        }
+    ]
 }
