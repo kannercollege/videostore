@@ -47,6 +47,6 @@ def view_product(product_id):
     return render_template("view_product.html", product=product)
 
 
-@app.route("/buy")
-def buy():
+@app.route("/products/<int:product_id>/buy")
+def buy_product(product_id):
     abort(501)
