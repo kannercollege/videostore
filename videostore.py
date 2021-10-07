@@ -1,4 +1,5 @@
 import json
+import random
 
 from flask import Flask, abort, render_template
 
@@ -16,7 +17,14 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html")
+    with PRODUCTS_DATABASE_FILENAME.open("r") as f:
+        data = json.load(f)
+
+    highlighted_products = random.sample(
+        data["products"], min(2, len(data["products"]))
+    )
+
+    return render_template("index.html", highlighted_products=highlighted_products)
 
 
 @app.route("/products")

@@ -3,6 +3,11 @@
 
 {% block title %}Home{% endblock %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='highlighted_products.css') }}">
+{% endblock %}
+
 {% block content %}
 <h1>
     Homepage
@@ -10,4 +15,23 @@
 <p>
     Welcome to the awesome homepage!
 </p>
+
+{% if highlighted_products|length > 0 %}
+<div class="highlighted_product_display_items">
+    <h2>
+        Highlighted items
+    </h2>
+
+    {% for product in highlighted_products %}
+    <a href="{{ url_for('view_product', product_id=product.id) }}">
+        <img class="highlighted_product_display_image" src="{{ url_for('static', filename=product.image_filename) }}"
+            alt="Picture of {{ product.name }}" title="{{ product.name }}">
+    </a>
+    <div class="highlighted_product_display_name">
+        {{ product.name }}
+    </div>
+    <br />
+    {% endfor %}
+</div>
+{% endif %}
 {% endblock %}
