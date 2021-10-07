@@ -1,0 +1,25 @@
+ul.navigation {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 36px;
+    line-height: 36px;
+    background: #0d7963;
+    font-size: 13px;
+}
+
+ul.navigation li {
+    border-right: 1px solid #189b80;
+    float: left;
+}
+
+ul.navigation a {
+    display: block;
+    padding: 0 28px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+ul.navigation a:hover, ul.navigation li.current a {
+    background: #086754;
+}
