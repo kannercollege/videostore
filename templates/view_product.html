@@ -16,7 +16,7 @@
     <h1 class=product_display_name_large>
         {{ product.name }}
     </h1>
-    <a class=product_display_price href="{{ url_for('buy') }}">
+    <a class=product_display_price href="{{ url_for('buy_product', product_id=product.id) }}">
         {{ "Buy for €{:.2f}".format(product.price|float) }}
     </a>
 </div>
