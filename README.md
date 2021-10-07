@@ -1,5 +1,7 @@
 # videostore
 
+![the products page](/assets/products.png)
+
 # install
 
 ```sh
