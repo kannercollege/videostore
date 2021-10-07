@@ -25,7 +25,12 @@ def products():
         data = json.load(f)
 
     products = [
-        Product(product["id"], product["name"], product["price"])
+        Product(
+            product["id"],
+            product["name"],
+            product["price"],
+            product["image_filename"],
+        )
         for product in data["products"]
     ]
 

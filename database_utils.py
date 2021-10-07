@@ -24,6 +24,7 @@ def check_products_database(file: Path):
         assert "id" in item
         assert "name" in item
         assert "price" in item
+        assert "image_filename" in item
 
 
 def create_databases():
