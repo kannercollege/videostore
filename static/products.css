@@ -1,8 +1,9 @@
 div.product_display_item {
-    margin: 10px;
+    margin: 8px 0px;
     padding: 5px;
     border: 1px solid forestgreen;
     width: 50%;
+    font-size: large;
 }
 
 .product_display_price {
