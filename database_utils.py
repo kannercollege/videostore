@@ -20,6 +20,11 @@ def check_products_database(file: Path):
     assert "products" in data
     assert type(data["products"]) == list
 
+    for item in data["products"]:
+        assert "id" in item
+        assert "name" in item
+        assert "price" in item
+
 
 def create_databases():
     create_products_database(PRODUCTS_DATABASE_FILENAME)
