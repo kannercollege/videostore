@@ -1,0 +1,25 @@
+ul.navigation {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 36px;
+    line-height: 36px;
+    background: forestgreen;
+    font-size: 13px;
+}
+
+ul.navigation li {
+    border-right: 2px solid black;
+    float: left;
+}
+
+ul.navigation a {
+    display: block;
+    padding: 0 28px;
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+ul.navigation a:hover, ul.navigation li.current a {
+    background: green;
+}
