@@ -2,6 +2,7 @@ div.product_display_item {
     margin: 10px;
     padding: 5px;
     border: 1px solid forestgreen;
+    width: 50%;
 }
 
 .product_display_price {
