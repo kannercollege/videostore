@@ -1,7 +1,7 @@
 import json
 import random
 
-from flask import Flask, abort, render_template
+from flask import Flask, abort, jsonify, render_template
 
 from database_utils import PRODUCTS_DATABASE_FILENAME, setup_databases
 from product import Product
@@ -63,3 +63,25 @@ def view_product(product_id):
 @app.route("/products/<int:product_id>/buy")
 def buy_product(product_id):
     abort(501)
+
+
+@app.route("/api/products")
+def api_products():
+    with PRODUCTS_DATABASE_FILENAME.open("r") as f:
+        data = json.load(f)
+
+    resp_data = {"data": []}
+
+    for product in data["products"]:
+        product = Product(
+            product["id"],
+            product["name"],
+            product["price"],
+            product["image_filename"],
+        )
+
+        resp_data["data"].append(
+            {"id": product.id, "name": product.name, "price": product.price}
+        )
+
+    return jsonify(resp_data)
