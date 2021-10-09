@@ -1,7 +1,7 @@
 import json
 import random
 
-from flask import Flask, abort, jsonify, render_template
+from flask import Flask, abort, jsonify, render_template, request
 
 from database_utils import PRODUCTS_DATABASE_FILENAME, setup_databases
 from product import Product
@@ -78,6 +78,51 @@ def api_products():
             product["name"],
             product["price"],
             product["image_filename"],
+        )
+
+        resp_data["data"].append(
+            {"id": product.id, "name": product.name, "price": product.price}
+        )
+
+    return jsonify(resp_data)
+
+
+@app.route("/api/product")
+def api_individual_product():
+    if "id" in request.args:
+        try:
+            product_id = int(request.args["id"])
+        except ValueError:
+            code = 400
+            resp_data = {
+                "error": {"code": code, "message": "product id must be an integer"}
+            }
+            return jsonify(resp_data), code
+    else:
+        code = 400
+        resp_data = {
+            "error": {
+                "code": code,
+                "message": "no product id was specified as parameter",
+            }
+        }
+        return jsonify(resp_data), code
+
+    with PRODUCTS_DATABASE_FILENAME.open("r") as f:
+        data = json.load(f)
+
+    match = next(
+        (product for product in data["products"] if product["id"] == product_id), None
+    )
+
+    resp_data = {"data": []}
+
+    if match:
+        product = Product(
+            match["id"],
+            match["name"],
+            match["price"],
+            match["image_filename"],
         )
 
         resp_data["data"].append(
