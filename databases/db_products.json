@@ -1,34 +1,26 @@
 {
+    "$schema": "./db_products_schema.json",
     "products": [
         {
             "id": 0,
-            "name": "Sony P6120HMPR/2C 2-Pack 120-Minute Hi8 Tape with Hangtab",
-            "price": 39.86,
-            "image_filename": "Sony_P6120HMPR.jpg"
+            "name": "Pinokkio",
+            "price": 5.95,
+            "image_filename": "pinokkio.jpg",
+            "description": "Pinokkio (VHS Videoband)"
         },
         {
             "id": 1,
-            "name": "Fujifilm P6-120 Hi 8MM (1-Pack)",
-            "price": 12.98,
-            "image_filename": "Fujifilm_P6-120.jpg"
+            "name": "Sneeuwwitje en de zeven dwergen",
+            "price": 5.95,
+            "image_filename": "sneeuwwitje.jpg",
+            "description": "Sneeuwwitje en de zeven dwergen  (VHS Band)\ngeen dvd maar video band"
         },
         {
             "id": 2,
-            "name": "2-pack 120min Hi 8 Video Tape (Discontinued by Manufacturer)",
-            "price": 28.08,
-            "image_filename": "2-pack_120min_Hi_8_Video_Tape.jpg"
-        },
-        {
-            "id": 3,
-            "name": "Sony MP 8mm Video Cassette Standard Grade 120 min (2 Pack)",
-            "price": 28.56,
-            "image_filename": "Sony_MP_8mm_Video_Cassette.jpg"
-        },
-        {
-            "id": 4,
-            "name": "Sony Hi 8mm HMP Metal Particle Video Tape (120 Min.) Audio Cassette-Tape, 2-Pack",
-            "price": 41,
-            "image_filename": "Sony_Hi_8mm_HMP.jpg"
+            "name": "Assepoester",
+            "price": 5.95,
+            "image_filename": "assepoester.jpg",
+            "description": "Assepoester (VHS Videoband)"
         }
     ]
 }
