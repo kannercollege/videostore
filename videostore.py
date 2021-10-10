@@ -29,6 +29,13 @@ def index():
 
 @app.route("/products")
 def products():
+    list_all = (
+        "search" not in request.args
+        or request.args.get("search", "").replace(" ", "") == ""
+    )
+    if not list_all:
+        search_term = request.args["search"].strip()
+
     with PRODUCTS_DATABASE_FILENAME.open("r") as f:
         data = json.load(f)
 
@@ -40,6 +47,7 @@ def products():
             product["image_filename"],
         )
         for product in data["products"]
+        if list_all or search_term.lower() in product["name"].lower()
     ]
 
     return render_template("products.html", products=products)
