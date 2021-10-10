@@ -22,7 +22,7 @@
     {% for product in highlighted_products %}
     <a href="{{ url_for('view_product', product_id=product.id) }}">
         <img class="highlighted_product_display_image" src="{{ url_for('static', filename=product.image_filename) }}"
-            alt="Picture of {{ product.name }}" title="{{ product.name }}">
+            alt="Picture of {{ product.name }}" title="{{ product.name }}" width=400>
     </a>
     <div class="highlighted_product_display_name">
         {{ product.name }}
