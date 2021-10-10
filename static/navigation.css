@@ -4,13 +4,13 @@
 
 .topnav {
     overflow: hidden;
-    background-color: #e9e9e9;
+    background-color: forestgreen;
 }
 
 .topnav a {
     float: left;
     display: block;
-    color: black;
+    color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -18,13 +18,11 @@
 }
 
 .topnav a:hover {
-    background-color: #ddd;
-    color: black;
+    background-color: green;
 }
 
-.topnav a.active {
-    background-color: #2196F3;
-    color: white;
+.topnav a.current {
+    background-color: green;
 }
 
 .topnav .search-container {

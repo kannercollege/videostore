@@ -10,3 +10,18 @@
     padding: 32px;
     border: 2px solid black;
 }
+
+a.product_display_price {
+    text-decoration: none;
+    display: inline-block;
+    margin: 8px 0px;
+    padding: 8px 16px;
+}
+
+a.product_display_price:hover {
+    background-color: #ddd;
+}
+
+.product_display_price {
+    background-color: #f1f1f1;
+}

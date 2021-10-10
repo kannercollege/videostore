@@ -1,11 +1,20 @@
-div.product_display_item {
-    margin: 8px 0px;
-    padding: 5px;
-    border: 1px solid forestgreen;
-    width: 50%;
-    font-size: large;
-}
-
 .product_display_price {
     color: crimson;
+}
+
+a.product_display_item {
+    text-decoration: none;
+    display: inline-block;
+    margin: 8px 0px;
+    padding: 8px 16px;
+}
+
+a.product_display_item:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.product_display_item {
+    background-color: #f1f1f1;
+    color: black;
 }

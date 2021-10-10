@@ -14,8 +14,8 @@
 </h1>
 
 {% for product in products %}
-<div class="product_display_item">
-    <a href="{{ url_for('view_product', product_id=product.id) }}">
+<div>
+    <a class="product_display_item" href="{{ url_for('view_product', product_id=product.id) }}">
         <span class=product_display_name>
             {{ product.name }}
         </span>
