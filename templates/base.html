@@ -17,13 +17,17 @@
 </head>
 
 <body>
-    <ul class="navigation">
+    <div class="topnav">
         {% for id, href, name in navigation_bar %}
-        <li {% if id==active_page %} class="current" {% endif %}>
-            <a href="{{ url_for(href) }}">{{ name }}</a>
-        </li>
+        <a {% if id==active_page %} class="current" {% endif %} href="{{ url_for(href) }}">{{ name }}</a>
         {% endfor %}
-    </ul>
+        <div class="search-container">
+            <form action="{{ url_for('products') }}">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 
     <div id="content">{% block content %}{% endblock %}</div>
 </body>
