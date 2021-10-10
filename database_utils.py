@@ -1,8 +1,25 @@
 import json
 from pathlib import Path
 
+import jsonschema
+from jsonschema import validate
+
 DATABASES_DIRECTORY = Path("databases/")
 PRODUCTS_DATABASE_FILENAME = DATABASES_DIRECTORY / "db_products.json"
+PRODUCTS_DATABASE_SCHEMA_FILENAME = DATABASES_DIRECTORY / "db_products_schema.json"
+
+
+def get_schema(file: Path):
+    with file.open("r") as f:
+        schema = json.load(f)
+
+    return schema
+
+
+def validate_json(data, schema_path: Path):
+    schema = get_schema(schema_path)
+
+    validate(instance=data, schema=schema)
 
 
 def create_products_database(file: Path):
@@ -16,15 +33,7 @@ def check_products_database(file: Path):
     with file.open("r") as f:
         data = json.load(f)
 
-    assert type(data) == dict
-    assert "products" in data
-    assert type(data["products"]) == list
-
-    for item in data["products"]:
-        assert "id" in item
-        assert "name" in item
-        assert "price" in item
-        assert "image_filename" in item
+    validate_json(data, PRODUCTS_DATABASE_SCHEMA_FILENAME)
 
 
 def create_databases():
@@ -45,6 +54,7 @@ def setup_databases():
 
         create_databases()
 
-        _check()
     except FileExistsError:
         pass
+
+    _check()
