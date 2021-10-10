@@ -33,6 +33,7 @@ def products():
         "search" not in request.args
         or request.args.get("search", "").replace(" ", "") == ""
     )
+    search_term = ""
     if not list_all:
         search_term = request.args["search"].strip()
 
@@ -50,7 +51,12 @@ def products():
         if list_all or search_term.lower() in product["name"].lower()
     ]
 
-    return render_template("products.html", products=products)
+    return render_template(
+        "products.html",
+        products=products,
+        is_search=not list_all,
+        search_term=search_term,
+    )
 
 
 @app.route("/products/<int:product_id>")

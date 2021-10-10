@@ -10,7 +10,7 @@
 
 {% block content %}
 <h1>
-    Available products
+    Available products {% if is_search %} for "{{ search_term }}" {% endif %}
 </h1>
 
 {% for product in products %}
