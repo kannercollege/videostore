@@ -15,9 +15,9 @@
 
 {% if highlighted_products|length > 0 %}
 <div class="highlighted_product_display_items">
-    <h2>
+    <h3>
         Highlighted items
-    </h2>
+    </h3>
 
     {% for product in highlighted_products %}
     <a href="{{ url_for('view_product', product_id=product.id) }}">

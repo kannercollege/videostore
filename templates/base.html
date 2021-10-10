@@ -19,7 +19,7 @@
 <body>
     <div class="topnav">
         {% for id, href, name in navigation_bar %}
-        <a {% if id==active_page %} class="current" {% endif %} href="{{ url_for(href) }}">{{ name }}</a>
+        <a {% if id==active_page %} class="active" {% endif %} href="{{ url_for(href) }}">{{ name }}</a>
         {% endfor %}
         <div class="search-container">
             <form action="{{ url_for('products') }}">
