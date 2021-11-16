@@ -92,7 +92,8 @@ nav ul li a, nav ul li span, header .action {
 }
 
 .product .description {
-  white-space: pre-wrap;
+  white-space: pre-line;
+  overflow: auto;
 }
 
 .content:last-child {
