@@ -1,7 +1,5 @@
 # videostore
 
-![the products page](/assets/products.png)
-
 # install
 
 ```sh
@@ -17,5 +15,5 @@ pip install -r requirements.txt
 # usage
 
 ```sh
-./run.sh
+make run
 ```
