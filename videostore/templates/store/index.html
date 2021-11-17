@@ -12,7 +12,8 @@
 <article class="product">
   <header>
     <div>
-      <h1>{{ product['product_name'] }}</h1>
+      <h1>{{ product['product_name'] }} <span class="price">{{ config['CURRENCY_SYMBOL'] }}{{
+          "%.2f"|format(product['price']) }}</span></h1>
     </div>
     {% if current_user.is_admin %}
     <a class="action" href="{{ url_for('store.update', id=product['id']) }}">Edit</a>

@@ -11,7 +11,7 @@ def index():
     db = get_db()
     products = db.execute(
         """
-        SELECT id, created, product_name, product_description
+        SELECT id, created, product_name, product_description, price
         FROM product
         ORDER BY created DESC
         """
@@ -30,7 +30,7 @@ def get_product(id, check_admin=True):
     product = (
         get_db()
         .execute(
-            "SELECT id, created, product_name, product_description"
+            "SELECT id, created, product_name, product_description, price"
             " FROM product"
             " WHERE id = ?",
             (id,),
@@ -56,6 +56,8 @@ def create():
     if request.method == "POST":
         product_name = request.form["product_name"]
         product_description = request.form["product_description"]
+        price = float(request.form["price"])
+
         error = None
 
         if not product_name:
@@ -66,8 +68,8 @@ def create():
         else:
             db = get_db()
             db.execute(
-                "INSERT INTO product (product_name, product_description) VALUES (?, ?)",
-                (product_name, product_description),
+                "INSERT INTO product (product_name, product_description, price) VALUES (?, ?, ?)",
+                (product_name, product_description, price),
             )
             db.commit()
             return redirect(url_for("store.index"))
@@ -86,6 +88,8 @@ def update(id):
     if request.method == "POST":
         product_name = request.form["product_name"]
         product_description = request.form["product_description"]
+        price = float(request.form["price"])
+
         error = None
 
         if not product_name:
@@ -96,8 +100,8 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                "UPDATE product SET product_name = ?, product_description = ? WHERE id = ?",
-                (product_name, product_description, id),
+                "UPDATE product SET product_name = ?, product_description = ?, price = ? WHERE id = ?",
+                (product_name, product_description, price, id),
             )
             db.commit()
             return redirect(url_for("store.index"))

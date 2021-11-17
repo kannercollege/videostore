@@ -14,6 +14,7 @@ def create_app():
         SECRET_KEY="dev",
         DATABASE=os.path.join(app.instance_path, "videostore.sqlite"),
         ADMIN_USERNAMES=["admin"],
+        CURRENCY_SYMBOL="€",
     )
 
     login_manager = flask_login.LoginManager()

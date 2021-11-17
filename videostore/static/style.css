@@ -96,6 +96,10 @@ nav ul li a, nav ul li span, header .action {
   overflow: auto;
 }
 
+.product .price {
+  color: #a86437;
+}
+
 .content:last-child {
   margin-bottom: 0;
 }

@@ -12,5 +12,6 @@ CREATE TABLE product (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     product_name TEXT NOT NULL,
-    product_description TEXT NOT NULL
+    product_description TEXT,
+    price REAL NOT NULL
 );
