@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}{{ product.product_name }}{% endblock %}</h1>
+<a class="action" href="{{ url_for('store.buy', id=product.id) }}">
+    Buy for {{ config['CURRENCY_SYMBOL'] }}{{ "%.2f"|format(product['price']) }}
+</a>
+{% if current_user.is_admin %}
+<a class="action" href="{{ url_for('store.update', id=product['id']) }}">Edit</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<p class="description">{{ product['product_description'] }}</p>
+{% endblock %}

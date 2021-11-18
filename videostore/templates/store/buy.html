@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% set items = [
+('Shipping address',
+[('Country', 'country'),
+('City', 'city'),
+('Street', 'street'),
+('House number', 'house_number'),
+('ZIP code', 'zip_code')]),
+('Personal info',
+[('E-mail', 'email'),
+('Full name', 'full_name'),
+('Phone number', 'phone_number')])
+] %}
+
+{% block header %}
+<h1>{% block title %}{{ product.product_name }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% for legend_name, fields in items %}
+    <fieldset>
+        <legend>{{ legend_name }}</legend>
+
+        {% for label_name, for_name in fields %}
+
+        <label for="{{ for_name }}">{{ label_name }}</label>
+        <input name="{{ for_name }}" id="{{ for_name }}" value="{{ request.form[for_name] }}" required>
+        <br>
+
+        {% endfor %}
+    </fieldset>
+    {% endfor %}
+
+    <input type="submit" value="Buy">
+</form>
+{% endblock %}
