@@ -7,7 +7,7 @@ format:
 	black .
 
 init-db:
-	@echo WARNING: DROPPING ALL TABLES!
+	@echo WARNING: RESETTNG DATABASE
 	@echo PRESS CTRL+C WITHIN 10 SECONDS TO CANCEL && sleep 10
 
 	$(ENV) flask init-db
