@@ -21,6 +21,7 @@ CREATE TABLE product (
 CREATE TABLE product_order (
     id integer PRIMARY KEY AUTOINCREMENT,
     customer_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     country TEXT NOT NULL,
     city TEXT NOT NULL,
@@ -30,5 +31,6 @@ CREATE TABLE product_order (
     email TEXT NOT NULL,
     full_name TEXT NOT NULL,
     phone_number TEXT NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES user (id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (customer_id) REFERENCES user (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES product (id) ON UPDATE CASCADE ON DELETE CASCADE
 );

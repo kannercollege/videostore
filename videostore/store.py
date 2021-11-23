@@ -65,6 +65,8 @@ def buy(id):
         full_name = request.form["full_name"]
         phone_number = request.form["phone_number"]
 
+        product_id = request.form["product_id"]
+
         username = flask_login.current_user.get_id()
 
         db = get_db()
@@ -79,9 +81,10 @@ def buy(id):
         else:
             db = get_db()
             db.execute(
-                "INSERT INTO product_order (customer_id, country, city, street, house_number, zip_code, email, full_name, phone_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO product_order (customer_id, product_id, country, city, street, house_number, zip_code, email, full_name, phone_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     user["id"],
+                    product_id,
                     country,
                     city,
                     street,
@@ -175,3 +178,27 @@ def delete(id):
     db.execute("DELETE FROM product WHERE id = ?", (id,))
     db.commit()
     return redirect(url_for("store.index"))
+
+
+@bp.route("/profile")
+@flask_login.login_required
+def profile():
+    username = flask_login.current_user.get_id()
+
+    db = get_db()
+    user = db.execute("SELECT id FROM user WHERE username = ?", (username,)).fetchone()
+
+    orders = db.execute(
+        """
+        SELECT product.id as product_id, product.product_name, product_order.created
+        FROM product_order
+        INNER JOIN product ON product.id = product_order.product_id
+        WHERE product_order.customer_id = ?
+        ORDER BY product_order.created DESC
+        """,
+        (user["id"],),
+    ).fetchall()
+
+    [print(order.keys()) for order in orders]
+
+    return render_template("store/profile.html", user=user, orders=orders)

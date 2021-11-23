@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+<!-- TODO: add field type to input thing -->
+
 {% set items = [
 ('Shipping address',
 [('Country', 'country'),
@@ -32,6 +34,8 @@
         {% endfor %}
     </fieldset>
     {% endfor %}
+
+    <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
 
     <input type="submit" value="Buy">
 </form>
