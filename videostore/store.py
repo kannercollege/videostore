@@ -199,6 +199,4 @@ def profile():
         (user["id"],),
     ).fetchall()
 
-    [print(order.keys()) for order in orders]
-
     return render_template("store/profile.html", user=user, orders=orders)
