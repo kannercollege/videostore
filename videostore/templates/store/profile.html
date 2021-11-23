@@ -15,12 +15,9 @@
     </header>
     <p class="description">Order created at {{ order['created'] }}</p>
 </article>
-{% if not loop.last %}
 <hr>
-{% endif %}
 {% endfor %}
 
-<hr>
 <form action="{{ url_for('auth.delete') }}" method="post">
     <input class="danger" type="submit" value="Delete account" onclick="return confirm('Are you sure?');">
 </form>
