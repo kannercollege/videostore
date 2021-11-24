@@ -200,3 +200,23 @@ def profile():
     ).fetchall()
 
     return render_template("store/profile.html", user=user, orders=orders)
+
+
+@bp.route("/search")
+def search():
+    search_term = request.args.get("q").lower()
+
+    db = get_db()
+
+    products = db.execute(
+        """
+        SELECT * FROM product
+        WHERE product_name LIKE ?
+        ORDER BY created DESC
+        """,
+        (f"%{search_term}%",),
+    ).fetchall()
+
+    return render_template(
+        "store/search.html", products=products, search_term=search_term
+    )

@@ -3,6 +3,10 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
   <h1><a href="{{ url_for('store.index') }}">Videostore</a></h1>
+  <form action="{{ url_for('store.search') }}" method="get">
+    <input type="text" placeholder="Search.." name="q">
+    <button type="submit">Submit</button>
+  </form>
   <ul>
     {% if current_user.is_authenticated %}
     <li><a href="{{ url_for('store.profile') }}">{% if current_user.is_admin %}[ADMIN]{% endif %} {{

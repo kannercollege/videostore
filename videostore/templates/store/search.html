@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Search "{{ search_term }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+{% for product in products %}
+<article class="product">
+    <header>
+        <div>
+            <h1><a href="{{ url_for('store.view', id=product['id']) }}">{{ product['product_name'] }}</a></h1>
+        </div>
+    </header>
+    <p class="description">{{ product['product_description'] }}</p>
+</article>
+<hr>
+{% endfor %}
+{% endblock %}
