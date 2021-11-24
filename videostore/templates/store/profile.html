@@ -13,7 +13,8 @@
             <h1><a href="{{ url_for('store.view', id=order['product_id']) }}">{{ order['product_name'] }}</a></h1>
         </div>
     </header>
-    <p class="description">Order created at {{ order['created'] }}</p>
+    <p class="description">Order created on {{ order['created'].strftime('%Y-%m-%d') }} at {{
+        order['created'].strftime('%H:%M') }}</p>
 </article>
 <hr>
 {% endfor %}
