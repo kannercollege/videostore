@@ -15,7 +15,10 @@ CREATE TABLE product (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     product_name TEXT NOT NULL,
     product_description TEXT,
-    price REAL NOT NULL
+    price REAL NOT NULL CHECK (
+        price >= 0
+        and price <= 1000000
+    )
 );
 
 CREATE TABLE product_order (
