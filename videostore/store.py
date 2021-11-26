@@ -9,30 +9,16 @@ bp = Blueprint("store", __name__)
 @bp.route("/")
 def index():
     db = get_db()
-    products = db.execute(
-        """
-        SELECT id, created, product_name, product_description, price
-        FROM product
-        ORDER BY created DESC
-        """
-    ).fetchall()
+    products = db.execute("SELECT * FROM product ORDER BY created DESC").fetchall()
 
     return render_template("store/index.html", products=products)
-
-
-@bp.route("/test")
-@flask_login.login_required
-def test():
-    return "test"
 
 
 def get_product(id):
     product = (
         get_db()
         .execute(
-            "SELECT id, created, product_name, product_description, price"
-            " FROM product"
-            " WHERE id = ?",
+            "SELECT * FROM product WHERE id = ?",
             (id,),
         )
         .fetchone()
