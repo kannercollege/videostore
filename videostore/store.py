@@ -83,6 +83,7 @@ def buy(id):
             )
             db.commit()
 
+            flash("Your order has been placed successfully.")
             return redirect(url_for("store.view", id=id))
 
     product = get_product(id)
@@ -116,6 +117,7 @@ def create():
             )
             db.commit()
 
+            flash("Product created successfully.")
             return redirect(url_for("store.view", id=cursor.lastrowid))
 
     return render_template("store/create.html")
@@ -148,6 +150,8 @@ def update(id):
                 (product_name, product_description, price, id),
             )
             db.commit()
+
+            flash("Product updated successfully.")
             return redirect(url_for("store.index"))
 
     return render_template("store/update.html", product=product)
@@ -163,6 +167,8 @@ def delete(id):
     db = get_db()
     db.execute("DELETE FROM product WHERE id = ?", (id,))
     db.commit()
+
+    flash("Account deleted successfully.")
     return redirect(url_for("store.index"))
 
 
