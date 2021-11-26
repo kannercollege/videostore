@@ -168,7 +168,7 @@ def delete(id):
     db.execute("DELETE FROM product WHERE id = ?", (id,))
     db.commit()
 
-    flash("Account deleted successfully.")
+    flash("Product deleted successfully.")
     return redirect(url_for("store.index"))
 
 

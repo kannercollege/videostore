@@ -32,6 +32,8 @@ def register():
             except db.IntegrityError:
                 error = f"User {username} is already registered."
             else:
+                flash("Registered your account successfully.")
+
                 return redirect(url_for("auth.login"))
 
         flash(error)
@@ -63,6 +65,7 @@ def login():
             if next and not is_safe_url(next, {"127.0.0.1"}):
                 return abort(400)
 
+            flash("Logged in successfully.")
             return redirect(next or url_for("store.index"))
 
         flash(error)
@@ -73,6 +76,8 @@ def login():
 @bp.route("/logout")
 def logout():
     flask_login.logout_user()
+
+    flash("Logged out successfully.")
 
     return redirect(url_for("store.index"))
 
@@ -85,5 +90,7 @@ def delete():
     )
 
     flask_login.logout_user()
+
+    flash("Deleted your account successfully.")
 
     return redirect(url_for("store.index"))
