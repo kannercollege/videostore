@@ -33,6 +33,7 @@ def register():
                 error = f"User {username} is already registered."
             else:
                 flash("Registered your account successfully.")
+                flash("Please log in.")
 
                 return redirect(url_for("auth.login"))
 
