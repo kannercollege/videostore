@@ -1,18 +1,16 @@
 {% extends 'base.html' %}
 
-<!-- TODO: add field type to input thing -->
-
 {% set items = [
 ('Shipping address',
-[('Country', 'country'),
-('City', 'city'),
-('Street', 'street'),
-('House number', 'house_number'),
-('ZIP code', 'zip_code')]),
+[('Country', 'country', 'text'),
+('City', 'city', 'text'),
+('Street', 'street', 'text'),
+('House number', 'house_number', 'text'),
+('ZIP code', 'zip_code', 'text')]),
 ('Personal info',
-[('E-mail', 'email'),
-('Full name', 'full_name'),
-('Phone number', 'phone_number')])
+[('E-mail', 'email', 'email'),
+('Full name', 'full_name', 'text'),
+('Phone number', 'phone_number', 'tel')])
 ] %}
 
 {% block header %}
@@ -25,10 +23,11 @@
     <fieldset>
         <legend>{{ legend_name }}</legend>
 
-        {% for label_name, for_name in fields %}
+        {% for label_name, for_name, type in fields %}
 
         <label for="{{ for_name }}">{{ label_name }}</label>
-        <input name="{{ for_name }}" id="{{ for_name }}" value="{{ request.form[for_name] }}" required>
+        <input type="{{ type }}" name="{{ for_name }}" id="{{ for_name }}" value="{{ request.form[for_name] }}"
+            required>
         <br>
 
         {% endfor %}
