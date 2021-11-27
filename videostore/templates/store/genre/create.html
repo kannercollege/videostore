@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}New Genre{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    <label for="genre_name">Genre name</label>
+    <input name="genre_name" id="genre_name" value="{{ request.form['genre_name'] }}" required>
+    <input type="submit" value="Save">
+</form>
+{% endblock %}

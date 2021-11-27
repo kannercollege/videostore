@@ -141,3 +141,18 @@ footer {
   background-color: lightgray;
   color: #377ba8;
 }
+
+.genre>header {
+  display: flex;
+  align-items: flex-end;
+  font-size: 0.85em;
+}
+
+.genre>header>div:first-of-type {
+  flex: auto;
+}
+
+.genre>header h1 {
+  font-size: 1.5em;
+  margin-bottom: 0;
+}

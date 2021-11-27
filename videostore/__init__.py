@@ -26,9 +26,10 @@ def create_app():
 
     init_app(app)
 
-    from . import auth, store
+    from . import auth, genre, store
 
     app.register_blueprint(auth.bp)
+    app.register_blueprint(genre.bp)
     app.register_blueprint(store.bp)
 
     @app.login_manager.user_loader

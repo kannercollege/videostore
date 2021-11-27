@@ -22,6 +22,12 @@ CREATE TABLE product (
     )
 );
 
+CREATE TABLE genre (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    genre_name TEXT NOT NULL
+);
+
 CREATE TABLE product_order (
     id integer PRIMARY KEY AUTOINCREMENT,
     customer_id INTEGER NOT NULL,
