@@ -244,7 +244,7 @@ def profile():
 
     orders = db.execute(
         """
-        SELECT product.id AS product_id, product.product_name, product_order.created
+        SELECT product.id AS product_id, product.product_name, strftime('%s', product_order.created) AS created
         FROM product_order
         INNER JOIN product ON product.id = product_order.product_id
         WHERE product_order.customer_id = ?

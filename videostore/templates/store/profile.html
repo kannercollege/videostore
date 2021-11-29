@@ -13,8 +13,7 @@
             <h1><a href="{{ url_for('store.view', id=order['product_id']) }}">{{ order['product_name'] }}</a></h1>
         </div>
     </header>
-    <p class="description">Order created on {{ order['created'].strftime('%Y-%m-%d') }} at {{
-        order['created'].strftime('%H:%M') }}</p>
+    <p class="description">Order created on <span class="unixtime">{{ order['created'] }}</span></p>
 </article>
 <hr>
 {% endfor %}
@@ -22,4 +21,5 @@
 <form action="{{ url_for('auth.delete') }}" method="post">
     <input class="danger" type="submit" value="Delete account" onclick="return confirm('Are you sure?');">
 </form>
+<script src="{{ url_for('static', filename='timeformat.js') }}"></script>
 {% endblock %}
