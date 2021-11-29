@@ -48,14 +48,14 @@ def create():
             flash(error)
         else:
             db = get_db()
-            db.execute(
+            cursor = db.execute(
                 "INSERT INTO genre (genre_name) VALUES (?)",
                 (genre_name,),
             )
             db.commit()
 
             flash("Genre created successfully.")
-            return redirect(url_for("genres.index"))
+            return redirect(url_for("genres.view", id=cursor.lastrowid))
 
     return render_template("store/genre/create.html")
 
@@ -87,7 +87,7 @@ def update(id):
             db.commit()
 
             flash("Genre updated successfully.")
-            return redirect(url_for("genres.index"))
+            return redirect(url_for("genres.view", id=id))
 
     return render_template("store/genre/update.html", genre=genre)
 
