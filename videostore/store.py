@@ -98,29 +98,48 @@ def create():
         abort(403)
 
     if request.method == "POST":
+        db = get_db()
+
         product_name = request.form["product_name"]
         product_description = request.form["product_description"]
         price = float(request.form["price"])
+
+        genres = [
+            db.execute("SELECT * FROM genre WHERE id = ?", (id,)).fetchone()
+            for id in request.form.getlist("genres")
+        ]
 
         error = None
 
         if not product_name:
             error = "Product name is required."
 
+        if None in genres:
+            error = "Invalid genre entered."
+
         if error is not None:
             flash(error)
         else:
-            db = get_db()
             cursor = db.execute(
                 "INSERT INTO product (product_name, product_description, price) VALUES (?, ?, ?)",
                 (product_name, product_description, price),
             )
             db.commit()
 
+            for genre in genres:
+                db.execute(
+                    "INSERT INTO product_genre (product_id, genre_id) VALUES (?, ?)",
+                    (cursor.lastrowid, genre["id"]),
+                )
+            db.commit()
+
             flash("Product created successfully.")
             return redirect(url_for("store.view", id=cursor.lastrowid))
 
-    return render_template("store/create.html")
+    db = get_db()
+    genres = db.execute("SELECT * FROM genre ORDER BY genre_name").fetchall()
+
+    return render_template("store/create.html", genres=genres)
 
 
 @bp.route("/<int:id>/update", methods=("GET", "POST"))
@@ -132,14 +151,24 @@ def update(id):
     product = get_product(id)
 
     if request.method == "POST":
+        db = get_db()
+
         product_name = request.form["product_name"]
         product_description = request.form["product_description"]
         price = float(request.form["price"])
+
+        genres = [
+            db.execute("SELECT * FROM genre WHERE id = ?", (id,)).fetchone()
+            for id in request.form.getlist("genres")
+        ]
 
         error = None
 
         if not product_name:
             error = "Product name is required."
+
+        if None in genres:
+            error = "Invalid genre entered."
 
         if error is not None:
             flash(error)
@@ -151,10 +180,43 @@ def update(id):
             )
             db.commit()
 
-            flash("Product updated successfully.")
-            return redirect(url_for("store.index"))
+            db.execute(
+                "DELETE FROM product_genre WHERE product_id = ?",
+                (id,),
+            )
 
-    return render_template("store/update.html", product=product)
+            for genre in genres:
+                db.execute(
+                    "INSERT INTO product_genre (product_id, genre_id) VALUES (?, ?)",
+                    (id, genre["id"]),
+                )
+            db.commit()
+
+            flash("Product updated successfully.")
+            return redirect(url_for("store.view", id=id))
+
+    db = get_db()
+    genres = db.execute("SELECT * FROM genre ORDER BY genre_name").fetchall()
+
+    current_genres = [
+        genre["id"]
+        for genre in db.execute(
+            """
+            SELECT genre.id
+            FROM product_genre
+            INNER JOIN genre ON genre.id = product_genre.genre_id
+            WHERE product_genre.product_id = ?
+            """,
+            (id,),
+        ).fetchall()
+    ]
+
+    return render_template(
+        "store/update.html",
+        product=product,
+        genres=genres,
+        current_genres=current_genres,
+    )
 
 
 @bp.route("/<int:id>/delete", methods=("POST",))
