@@ -15,9 +15,7 @@
     <div>
       <h1>
         <a href="{{ url_for('store.view', id=product.id) }}">{{ product['product_name'] }}</a>
-        <span class="price">
-          {{ config['CURRENCY_SYMBOL'] }}{{ "%.2f"|format(product['price']) }}
-        </span>
+        <span class="price">{{ config['CURRENCY_SYMBOL'] }}{{ "%.2f"|format(product['price']) }}</span>
       </h1>
     </div>
     {% if current_user.is_admin %}
