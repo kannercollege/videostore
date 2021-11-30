@@ -128,24 +128,27 @@ def create():
         if None in genres:
             error = "Invalid genre entered."
 
-        if error is not None:
-            flash(error)
-        else:
-            cursor = db.execute(
-                "INSERT INTO product (product_name, product_description, price) VALUES (?, ?, ?)",
-                (product_name, product_description, price),
-            )
-            db.commit()
-
-            for genre in genres:
-                db.execute(
-                    "INSERT INTO product_genre (product_id, genre_id) VALUES (?, ?)",
-                    (cursor.lastrowid, genre["id"]),
+        if error is None:
+            try:
+                cursor = db.execute(
+                    "INSERT INTO product (product_name, product_description, price) VALUES (?, ?, ?)",
+                    (product_name, product_description, price),
                 )
-            db.commit()
+                db.commit()
 
-            flash("Product created successfully.")
-            return redirect(url_for("store.view", id=cursor.lastrowid))
+                for genre in genres:
+                    db.execute(
+                        "INSERT INTO product_genre (product_id, genre_id) VALUES (?, ?)",
+                        (cursor.lastrowid, genre["id"]),
+                    )
+                db.commit()
+            except db.IntegrityError:
+                error = f"Product {product_name} already exists."
+            else:
+                flash("Product created successfully.")
+                return redirect(url_for("store.view", id=cursor.lastrowid))
+
+        flash(error)
 
     db = get_db()
     genres = db.execute("SELECT * FROM genre ORDER BY genre_name").fetchall()
@@ -181,30 +184,32 @@ def update(id):
         if None in genres:
             error = "Invalid genre entered."
 
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
-            db.execute(
-                "UPDATE product SET product_name = ?, product_description = ?, price = ? WHERE id = ?",
-                (product_name, product_description, price, id),
-            )
-            db.commit()
-
-            db.execute(
-                "DELETE FROM product_genre WHERE product_id = ?",
-                (id,),
-            )
-
-            for genre in genres:
+        if error is None:
+            try:
                 db.execute(
-                    "INSERT INTO product_genre (product_id, genre_id) VALUES (?, ?)",
-                    (id, genre["id"]),
+                    "UPDATE product SET product_name = ?, product_description = ?, price = ? WHERE id = ?",
+                    (product_name, product_description, price, id),
                 )
-            db.commit()
+                db.commit()
 
-            flash("Product updated successfully.")
-            return redirect(url_for("store.view", id=id))
+                db.execute(
+                    "DELETE FROM product_genre WHERE product_id = ?",
+                    (id,),
+                )
+
+                for genre in genres:
+                    db.execute(
+                        "INSERT INTO product_genre (product_id, genre_id) VALUES (?, ?)",
+                        (id, genre["id"]),
+                    )
+                db.commit()
+            except db.IntegrityError:
+                error = f"Product {product_name} already exists."
+            else:
+                flash("Product updated successfully.")
+                return redirect(url_for("store.view", id=id))
+
+        flash(error)
 
     db = get_db()
     genres = db.execute("SELECT * FROM genre ORDER BY genre_name").fetchall()

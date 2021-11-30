@@ -44,18 +44,22 @@ def create():
         if not genre_name:
             error = "Genre name is required."
 
-        if error is not None:
-            flash(error)
-        else:
+        if error is None:
             db = get_db()
-            cursor = db.execute(
-                "INSERT INTO genre (genre_name) VALUES (?)",
-                (genre_name,),
-            )
-            db.commit()
+            try:
+                db.execute(
+                    "INSERT INTO genre (genre_name) VALUES (?)",
+                    (genre_name,),
+                )
+                db.commit()
+            except db.IntegrityError:
+                error = f"Genre {genre_name} already exists."
+            else:
+                flash("Genre created successfully.")
 
-            flash("Genre created successfully.")
-            return redirect(url_for("genres.index"))
+                return redirect(url_for("genres.index"))
+
+        flash(error)
 
     return render_template("store/genre/create.html")
 
