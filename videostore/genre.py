@@ -25,7 +25,7 @@ def get_genre(id):
 @bp.route("/")
 def index():
     db = get_db()
-    genres = db.execute("SELECT * FROM genre ORDER BY created DESC").fetchall()
+    genres = db.execute("SELECT * FROM genre ORDER BY genre_name").fetchall()
 
     return render_template("store/genre/index.html", genres=genres)
 
