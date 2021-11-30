@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}Home{% endblock %}
+
 {% block header %}
-<h1>{% block title %}Products{% endblock %}</h1>
+<h1>Recently Added</h1>
 {% if current_user.is_admin %}
 <a class="action" href="{{ url_for('genres.index') }}">Genres</a>
 <a class="action" href="{{ url_for('store.create') }}">New</a>

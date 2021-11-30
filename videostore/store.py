@@ -11,7 +11,7 @@ def index():
     db = get_db()
     products = db.execute("SELECT * FROM product ORDER BY created DESC").fetchall()
 
-    return render_template("store/index.html", products=products)
+    return render_template("store/index.html", products=products[:5])
 
 
 def get_product(id):
