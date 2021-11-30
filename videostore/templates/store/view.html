@@ -11,5 +11,9 @@
 {% endblock %}
 
 {% block content %}
+<div class="productgenres">
+    {% for genre in genres %}<a class="genreblock"
+        href="{{ url_for('genres.view', id=genre['genre_id']) }}">{{genre['genre_name'] }}</a>{% endfor %}
+</div>
 <p class="description">{{ product['product_description'] }}</p>
 {% endblock %}

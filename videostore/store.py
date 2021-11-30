@@ -34,7 +34,18 @@ def get_product(id):
 def view(id):
     product = get_product(id)
 
-    return render_template("store/view.html", product=product)
+    db = get_db()
+    genres = db.execute(
+        """
+        SELECT * FROM product_genre
+        INNER JOIN genre ON genre.id = product_genre.genre_id
+        WHERE product_id = ?
+        ORDER BY genre.genre_name
+        """,
+        (product["id"],),
+    ).fetchall()
+
+    return render_template("store/view.html", product=product, genres=genres)
 
 
 @bp.route("/<int:id>/buy", methods=("GET", "POST"))

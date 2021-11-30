@@ -111,6 +111,19 @@ nav ul li a, nav ul li span, header .action {
   flex-direction: column;
 }
 
+.content .productgenres {
+  margin: 1em 0px;
+  padding: 0.5em 0px;
+  color: #377ba8;
+}
+
+.content .productgenres>* {
+  padding: 0.5em;
+  margin: 0px 0.5em;
+  border-radius: 4px;
+  background-color: #eee;
+}
+
 .content label {
   font-weight: bold;
   margin-bottom: 0.5em;
