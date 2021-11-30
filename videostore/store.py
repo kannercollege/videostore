@@ -14,6 +14,14 @@ def index():
     return render_template("store/index.html", products=products[:5])
 
 
+@bp.route("/all")
+def all():
+    db = get_db()
+    products = db.execute("SELECT * FROM product ORDER BY created DESC").fetchall()
+
+    return render_template("store/all.html", products=products)
+
+
 def get_product(id):
     product = (
         get_db()

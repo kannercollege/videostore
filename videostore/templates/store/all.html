@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
-
 {% block header %}
-<h1>Recently Added</h1>
+<h1>{% block title %}All Products{% endblock %}</h1>
 {% if current_user.is_admin %}
 <a class="action" href="{{ url_for('genres.index') }}">Genres</a>
 <a class="action" href="{{ url_for('store.create') }}">New</a>
@@ -26,7 +24,8 @@
   </header>
   <p class="description">{{ product['product_description'] }}</p>
 </article>
+{% if not loop.last %}
 <hr>
+{% endif %}
 {% endfor %}
-<a href="{{ url_for('store.all') }}">View All...</a>
 {% endblock %}
