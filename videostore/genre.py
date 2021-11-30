@@ -96,7 +96,18 @@ def update(id):
 def view(id):
     genre = get_genre(id)
 
-    return render_template("store/genre/view.html", genre=genre)
+    db = get_db()
+    products = db.execute(
+        """
+        SELECT * FROM product_genre
+        INNER JOIN product ON product.id = product_genre.product_id
+        WHERE genre_id = ?
+        ORDER BY product.product_name
+        """,
+        (genre["id"],),
+    ).fetchall()
+
+    return render_template("store/genre/view.html", genre=genre, products=products)
 
 
 @bp.route("/<int:id>/delete", methods=("POST",))
