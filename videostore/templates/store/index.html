@@ -4,8 +4,8 @@
 
 {% block header %}
 <h1>Recently Added</h1>
-{% if current_user.is_admin %}
 <a class="action" href="{{ url_for('genres.index') }}">Genres</a>
+{% if current_user.is_admin %}
 <a class="action" href="{{ url_for('store.create') }}">New</a>
 {% endif %}
 {% endblock %}
