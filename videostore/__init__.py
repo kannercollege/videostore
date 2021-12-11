@@ -26,8 +26,9 @@ def create_app():
 
     init_app(app)
 
-    from . import auth, genre, store
+    from . import api, auth, genre, store
 
+    app.register_blueprint(api.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(genre.bp)
     app.register_blueprint(store.bp)
