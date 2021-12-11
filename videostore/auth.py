@@ -85,13 +85,15 @@ def logout():
 
 @bp.route("/delete", methods=("POST",))
 def delete():
-    db = get_db()
-    db.execute(
-        "DELETE FROM user WHERE username = ?", (flask_login.current_user.get_id(),)
-    )
+    abort(501)
 
-    flask_login.logout_user()
+    # db = get_db()
+    # db.execute(
+    #     "DELETE FROM user WHERE username = ?", (flask_login.current_user.get_id(),)
+    # )
 
-    flash("Deleted your account successfully.")
+    # flask_login.logout_user()
 
-    return redirect(url_for("store.index"))
+    # flash("Deleted your account successfully.")
+
+    # return redirect(url_for("store.index"))
