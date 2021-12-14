@@ -122,6 +122,8 @@ def create():
         product_name = request.form["product_name"]
         product_description = request.form["product_description"]
         price = float(request.form["price"])
+        product_imdb_id = request.form["imdb_id"]
+        is_stock_left = int("is_stock_left" in request.form)
 
         genres = [
             db.execute("SELECT * FROM genre WHERE id = ?", (id,)).fetchone()
@@ -133,14 +135,23 @@ def create():
         if not product_name:
             error = "Product name is required."
 
+        if not product_imdb_id:
+            error = "IMDb id is required."
+
         if None in genres:
             error = "Invalid genre entered."
 
         if error is None:
             try:
                 cursor = db.execute(
-                    "INSERT INTO product (product_name, product_description, price) VALUES (?, ?, ?)",
-                    (product_name, product_description, price),
+                    "INSERT INTO product (product_name, product_description, product_imdb_id, product_is_stock_left, price) VALUES (?, ?, ?, ?, ?)",
+                    (
+                        product_name,
+                        product_description,
+                        product_imdb_id,
+                        is_stock_left,
+                        price,
+                    ),
                 )
                 db.commit()
 
@@ -151,7 +162,7 @@ def create():
                     )
                 db.commit()
             except db.IntegrityError:
-                error = f"Product {product_name} already exists."
+                error = f"Product {product_name} already exists, or there was some other error with adding this product."
             else:
                 flash("Product created successfully.")
                 return redirect(url_for("store.view", id=cursor.lastrowid))
@@ -178,6 +189,8 @@ def update(id):
         product_name = request.form["product_name"]
         product_description = request.form["product_description"]
         price = float(request.form["price"])
+        product_imdb_id = request.form["imdb_id"]
+        is_stock_left = int("is_stock_left" in request.form)
 
         genres = [
             db.execute("SELECT * FROM genre WHERE id = ?", (id,)).fetchone()
@@ -189,14 +202,24 @@ def update(id):
         if not product_name:
             error = "Product name is required."
 
+        if not product_imdb_id:
+            error = "IMDb id is required."
+
         if None in genres:
             error = "Invalid genre entered."
 
         if error is None:
             try:
                 db.execute(
-                    "UPDATE product SET product_name = ?, product_description = ?, price = ? WHERE id = ?",
-                    (product_name, product_description, price, id),
+                    "UPDATE product SET product_name = ?, product_description = ?, product_imdb_id = ?, product_is_stock_left = ?, price = ? WHERE id = ?",
+                    (
+                        product_name,
+                        product_description,
+                        product_imdb_id,
+                        is_stock_left,
+                        price,
+                        id,
+                    ),
                 )
                 db.commit()
 
@@ -212,7 +235,7 @@ def update(id):
                     )
                 db.commit()
             except db.IntegrityError:
-                error = f"Product {product_name} already exists."
+                error = f"Product {product_name} already exists, or there was some other error with adding this product."
             else:
                 flash("Product updated successfully.")
                 return redirect(url_for("store.view", id=id))

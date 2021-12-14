@@ -16,6 +16,12 @@
   <input name="price" id="price" type="number" min="0" max="1000000" step="0.01" value="{{ request.form['price'] }}"
     required>
 
+  <label for="imdb_id">IMDb id</label>
+  <input name="imdb_id" id="imdb_id" value="{{ request.form['imdb_id'] }}" required>
+
+  <label for="is_stock_left">In stock?</label>
+  <input type="checkbox" name="is_stock_left" id="is_stock_left" checked>
+
   <label for="genres">Genres</label>
   <select name="genres" id="genres" multiple>
     {% for genre in genres %}

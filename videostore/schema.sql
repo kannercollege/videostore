@@ -20,6 +20,8 @@ CREATE TABLE product (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     product_name TEXT UNIQUE NOT NULL,
     product_description TEXT,
+    product_imdb_id TEXT NOT NULL,
+    product_is_stock_left INTEGER NOT NULL,
     price REAL NOT NULL CHECK (
         price >= 0
         and price <= 1000000

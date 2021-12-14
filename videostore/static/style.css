@@ -169,3 +169,7 @@ footer {
   font-size: 1.5em;
   margin-bottom: 0;
 }
+
+.product>header a.out_of_stock {
+  color: #777;
+}
