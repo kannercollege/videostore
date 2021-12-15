@@ -19,7 +19,7 @@ def index():
 @bp.route("/all")
 def all():
     db = get_db()
-    products = db.execute("SELECT * FROM product ORDER BY created DESC").fetchall()
+    products = db.execute("SELECT * FROM product ORDER BY product_name").fetchall()
 
     return render_template("store/all.html", products=products)
 
