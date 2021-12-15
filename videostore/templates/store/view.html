@@ -2,6 +2,9 @@
 
 {% block header %}
 <h1>{% block title %}{{ product.product_name }}{% endblock %}</h1>
+<a class="action" href="https://www.imdb.com/title/{{ product['product_imdb_id'] }}/" target="_blank">
+    View on IMDb
+</a>
 <a class="action" href="{{ url_for('store.buy', id=product.id) }}">
     Buy for {{ config['CURRENCY_SYMBOL'] }}{{ "%.2f"|format(product['price']) }}
 </a>

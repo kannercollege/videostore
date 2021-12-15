@@ -14,7 +14,8 @@
   <header>
     <div>
       <h1>
-        <a href="{{ url_for('store.view', id=product['id']) }}">{{ product['product_name'] }}</a>
+        <a class="{{ 'out_of_stock' if product['product_is_stock_left'] == 0 }}"
+          href="{{ url_for('store.view', id=product['id']) }}">{{ product['product_name'] }}</a>
         <span class="price">{{ config['CURRENCY_SYMBOL'] }}{{ "%.2f"|format(product['price']) }}</span>
       </h1>
     </div>

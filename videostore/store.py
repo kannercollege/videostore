@@ -9,7 +9,9 @@ bp = Blueprint("store", __name__)
 @bp.route("/")
 def index():
     db = get_db()
-    products = db.execute("SELECT * FROM product ORDER BY created DESC").fetchall()
+    products = db.execute(
+        "SELECT * FROM product WHERE product_is_stock_left = 1 ORDER BY created DESC"
+    ).fetchall()
 
     return render_template("store/index.html", products=products[:5])
 
