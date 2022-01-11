@@ -2,6 +2,8 @@ APP_NAME = videostore
 ENV = FLASK_ENV=development FLASK_APP=$(APP_NAME)
 PROD_ENV = FLASK_APP=$(APP_NAME)
 
+all: run
+
 .PHONY: format init-db run run-network prod-run prod-run-network
 
 format:
