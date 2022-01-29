@@ -22,9 +22,10 @@ CREATE TABLE product (
     product_description TEXT,
     product_imdb_id TEXT NOT NULL,
     product_is_stock_left INTEGER NOT NULL,
+    product_image_filename TEXT,
     price REAL NOT NULL CHECK (
         price >= 0
-        and price <= 1000000
+        AND price <= 1000000
     )
 );
 

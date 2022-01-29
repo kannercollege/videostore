@@ -126,6 +126,7 @@ def create():
         price = float(request.form["price"])
         product_imdb_id = request.form["imdb_id"]
         is_stock_left = int("is_stock_left" in request.form)
+        product_image_filename = request.form["product_image_filename"]
 
         genres = [
             db.execute("SELECT * FROM genre WHERE id = ?", (id,)).fetchone()
@@ -143,15 +144,19 @@ def create():
         if None in genres:
             error = "Invalid genre entered."
 
+        if not product_image_filename:
+            error = "Image filename is required."
+
         if error is None:
             try:
                 cursor = db.execute(
-                    "INSERT INTO product (product_name, product_description, product_imdb_id, product_is_stock_left, price) VALUES (?, ?, ?, ?, ?)",
+                    "INSERT INTO product (product_name, product_description, product_imdb_id, product_is_stock_left, product_image_filename, price) VALUES (?, ?, ?, ?, ?, ?)",
                     (
                         product_name,
                         product_description,
                         product_imdb_id,
                         is_stock_left,
+                        product_image_filename,
                         price,
                     ),
                 )
@@ -193,6 +198,7 @@ def update(id):
         price = float(request.form["price"])
         product_imdb_id = request.form["imdb_id"]
         is_stock_left = int("is_stock_left" in request.form)
+        product_image_filename = request.form["product_image_filename"]
 
         genres = [
             db.execute("SELECT * FROM genre WHERE id = ?", (id,)).fetchone()
@@ -210,15 +216,19 @@ def update(id):
         if None in genres:
             error = "Invalid genre entered."
 
+        if not product_image_filename:
+            error = "Image filename is required."
+
         if error is None:
             try:
                 db.execute(
-                    "UPDATE product SET product_name = ?, product_description = ?, product_imdb_id = ?, product_is_stock_left = ?, price = ? WHERE id = ?",
+                    "UPDATE product SET product_name = ?, product_description = ?, product_imdb_id = ?, product_is_stock_left = ?, product_image_filename = ?, price = ? WHERE id = ?",
                     (
                         product_name,
                         product_description,
                         product_imdb_id,
                         is_stock_left,
+                        product_image_filename,
                         price,
                         id,
                     ),

@@ -101,6 +101,20 @@ nav ul li a, nav ul li span, header .action {
   color: #a86437;
 }
 
+.product-information {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-information .productimage {
+  flex: 50%;
+  max-width: 25%;
+}
+
+.product-information .description {
+  flex: 50%;
+}
+
 .content:last-child {
   margin-bottom: 0;
 }

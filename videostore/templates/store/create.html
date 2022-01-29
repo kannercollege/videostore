@@ -19,6 +19,9 @@
   <label for="imdb_id">IMDb id</label>
   <input name="imdb_id" id="imdb_id" value="{{ request.form['imdb_id'] }}" required>
 
+  <label for="product_image_filename">Image filename</label>
+  <input name="product_image_filename" id="product_image_filename" value="{{ request.form['product_image_filename'] }}">
+
   <label for="is_stock_left">In stock?</label>
   <input type="checkbox" name="is_stock_left" id="is_stock_left" checked>
 
