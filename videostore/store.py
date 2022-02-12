@@ -4,13 +4,16 @@ from flask import Blueprint, abort, render_template, request
 bp = Blueprint("store", __name__)
 
 
+async def get_data(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            data = await response.json()
+    return data
+
+
 @bp.route("/")
 async def index():
-    async with aiohttp.ClientSession() as session:
-        async with session.get(
-            "https://apex.oracle.com/pls/apex/lkc-ct14/store/movies/"
-        ) as response:
-            data = await response.json()
+    data = await get_data("https://apex.oracle.com/pls/apex/lkc-ct14/store/movies")
 
     products = data["items"]
 
@@ -19,11 +22,7 @@ async def index():
 
 @bp.route("/all")
 async def all():
-    async with aiohttp.ClientSession() as session:
-        async with session.get(
-            "https://apex.oracle.com/pls/apex/lkc-ct14/store/movies/"
-        ) as response:
-            data = await response.json()
+    data = await get_data("https://apex.oracle.com/pls/apex/lkc-ct14/store/movies")
 
     products = data["items"]
 
@@ -31,11 +30,7 @@ async def all():
 
 
 async def get_product(id):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(
-            "https://apex.oracle.com/pls/apex/lkc-ct14/store/movies/"
-        ) as response:
-            data = await response.json()
+    data = await get_data(f"https://apex.oracle.com/pls/apex/lkc-ct14/store/movies")
 
     products = data["items"]
 
@@ -57,11 +52,7 @@ async def view(id):
 async def search():
     search_term = request.args.get("q").lower()
 
-    async with aiohttp.ClientSession() as session:
-        async with session.get(
-            "https://apex.oracle.com/pls/apex/lkc-ct14/store/movies/"
-        ) as response:
-            data = await response.json()
+    data = await get_data("https://apex.oracle.com/pls/apex/lkc-ct14/store/movies")
 
     products = data["items"]
 
