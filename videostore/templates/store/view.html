@@ -1,27 +1,19 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}{{ product.product_name }}{% endblock %}</h1>
-<a class="action" href="https://www.imdb.com/title/{{ product['product_imdb_id'] }}/" target="_blank">
+<h1>{% block title %}{{ product['title'] }}{% endblock %}</h1>
+<a class="action" href="https://www.imdb.com/title/{{ product['imdb'] }}/" target="_blank">
     View on IMDb
 </a>
-<a class="action" href="{{ url_for('store.buy', id=product.id) }}">
-    Buy for {{ config['CURRENCY_SYMBOL'] }}{{ "%.2f"|format(product['price']) }}
-</a>
-{% if current_user.is_admin %}
-<a class="action" href="{{ url_for('store.update', id=product['id']) }}">Edit</a>
-{% endif %}
 {% endblock %}
 
 {% block content %}
 <div class="productgenres">
-    {% for genre in genres %}<a class="genreblock"
-        href="{{ url_for('genres.view', id=genre['genre_id']) }}">{{genre['genre_name'] }}</a>{% endfor %}
+    {% for genre in genres %}
+    <span class="genreblock">{{ genre }}</span>
+    {% endfor %}
 </div>
 <div class="product-information">
-    <p class="description">{{ product['product_description'] }}</p>
-
-    <img class="productimage" src="{{ url_for('static', filename='images/'~product['product_image_filename']) }}"
-        alt="{{ product['product_name'] }}">
+    <p class="description">{{ product['story'] }}</p>
 </div>
 {% endblock %}

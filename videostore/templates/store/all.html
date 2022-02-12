@@ -2,10 +2,6 @@
 
 {% block header %}
 <h1>{% block title %}All Products{% endblock %}</h1>
-{% if current_user.is_admin %}
-<a class="action" href="{{ url_for('genres.index') }}">Genres</a>
-<a class="action" href="{{ url_for('store.create') }}">New</a>
-{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -14,16 +10,13 @@
   <header>
     <div>
       <h1>
-        <a class="{{ 'out_of_stock' if product['product_is_stock_left'] == 0 }}"
-          href="{{ url_for('store.view', id=product['id']) }}">{{ product['product_name'] }}</a>
-        <span class="price">{{ config['CURRENCY_SYMBOL'] }}{{ "%.2f"|format(product['price']) }}</span>
+        <a class="{{ 'out_of_stock' if product['stock'] == 0 }}"
+          href="{{ url_for('store.view', id=product['imdb']) }}">{{
+          product['title'] }}</a>
       </h1>
     </div>
-    {% if current_user.is_admin %}
-    <a class="action" href="{{ url_for('store.update', id=product['id']) }}">Edit</a>
-    {% endif %}
   </header>
-  <p class="description">{{ product['product_description'] }}</p>
+  <p class="description">{{ product['story'] }}</p>
 </article>
 {% if not loop.last %}
 <hr>
