@@ -11,9 +11,12 @@ async def get_data(url):
     return data
 
 
+MOVIES_URL = "https://apex.oracle.com/pls/apex/lkc-ct14/store/movies"
+
+
 @bp.route("/")
 async def index():
-    data = await get_data("https://apex.oracle.com/pls/apex/lkc-ct14/store/movies")
+    data = await get_data(MOVIES_URL)
 
     products = data["items"]
 
@@ -22,7 +25,7 @@ async def index():
 
 @bp.route("/all")
 async def all():
-    data = await get_data("https://apex.oracle.com/pls/apex/lkc-ct14/store/movies")
+    data = await get_data(MOVIES_URL)
 
     products = data["items"]
 
@@ -30,7 +33,7 @@ async def all():
 
 
 async def get_product(id):
-    data = await get_data(f"https://apex.oracle.com/pls/apex/lkc-ct14/store/movies")
+    data = await get_data(MOVIES_URL)
 
     products = data["items"]
 
@@ -52,7 +55,7 @@ async def view(id):
 async def search():
     search_term = request.args.get("q").lower()
 
-    data = await get_data("https://apex.oracle.com/pls/apex/lkc-ct14/store/movies")
+    data = await get_data(MOVIES_URL)
 
     products = data["items"]
 
