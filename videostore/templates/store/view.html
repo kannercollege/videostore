@@ -5,6 +5,11 @@
 <a class="action" href="https://www.imdb.com/title/{{ product['imdb'] }}/" target="_blank">
     View on IMDb
 </a>
+<a class="action">
+    {% if product['price'] %}
+    {{ config['CURRENCY_SYMBOL'] }}{{ "%.2f"|format(product['price']) }}
+    {% endif %}
+</a>
 {% endblock %}
 
 {% block content %}
@@ -15,5 +20,8 @@
 </div>
 <div class="product-information">
     <p class="description">{{ product['story'] }}</p>
+    {% if image_b64 %}
+    <img class="productimage" src="data:image/png;base64, {{ image_b64 }}" alt="{{ product['product_name'] }}">
+    {% endif %}
 </div>
 {% endblock %}

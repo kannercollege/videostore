@@ -15,6 +15,9 @@
         <a class="{{ 'out_of_stock' if product['stock'] == 0 }}"
           href="{{ url_for('store.view', id=product['imdb']) }}">{{
           product['title'] }}</a>
+        {% if product['price'] %}
+        <span class="price">{{ config['CURRENCY_SYMBOL'] }}{{ "%.2f"|format(product['price']) }}</span>
+        {% endif %}
       </h1>
     </div>
   </header>
