@@ -138,7 +138,7 @@ def buy(id):
 
 
 def send_order_notification(
-    message: str, url: str, hostname: str, port: int, username: str, password: str
+    message: str, topic: str, hostname: str, port: int, username: str, password: str
 ):
     message = base64.b64encode(message.encode("ascii")).decode("ascii")
 
@@ -149,7 +149,7 @@ def send_order_notification(
     )
 
     publish.single(
-        url,
+        topic,
         payload,
         hostname=hostname,
         port=port,
