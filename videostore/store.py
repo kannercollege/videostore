@@ -1,5 +1,17 @@
+import base64
+
 import flask_login
-from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
+import paho.mqtt.publish as publish
+from flask import (
+    Blueprint,
+    abort,
+    current_app,
+    flash,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 
 from videostore.db import get_db
 
@@ -105,11 +117,47 @@ def buy(id):
             db.commit()
 
             flash("Your order has been placed successfully.")
+
+            product_name = get_product(product_id)["product_name"]
+
+            if current_app.config["SEND_ORDER_NOTIFICATION"] is True:
+                send_order_notification(
+                    product_name,
+                    "v3/lkc-scm@ttn/devices/lkc-scm-00/down/push",
+                    "eu1.cloud.thethings.network",
+                    1883,
+                    "lkc-scm@ttn",
+                    current_app.config["PRODUCT_NOTIF_PASSWORD"],
+                )
+
             return redirect(url_for("store.view", id=id))
 
     product = get_product(id)
 
     return render_template("store/buy.html", product=product)
+
+
+def send_order_notification(
+    message: str, url: str, hostname: str, port: int, username: str, password: str
+):
+    message = base64.b64encode(message.encode("ascii")).decode("ascii")
+
+    payload = (
+        '{"downlinks": [{"f_port": 15, "frm_payload": "'
+        + message
+        + '", "priority": "NORMAL"}]}'
+    )
+
+    publish.single(
+        url,
+        payload,
+        hostname=hostname,
+        port=port,
+        auth={
+            "username": username,
+            "password": password,
+        },
+    )
 
 
 @bp.route("/create", methods=("GET", "POST"))

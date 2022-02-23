@@ -7,11 +7,20 @@ from .db import get_db, init_app
 from .user import User
 
 
+def get_product_notif_password(filepath) -> str:
+    with open(filepath, "r") as f:
+        return f.read().strip()
+
+
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_mapping(
         SECRET_KEY="dev",
+        PRODUCT_NOTIF_PASSWORD=get_product_notif_password(
+            os.path.join(app.instance_path, "product_notif_password.txt")
+        ),
+        SEND_ORDER_NOTIFICATIONS=True,
         DATABASE=os.path.join(app.instance_path, "videostore.sqlite"),
         ADMIN_USERNAMES=["admin"],
         CURRENCY_SYMBOL="€",
