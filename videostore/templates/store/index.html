@@ -13,7 +13,7 @@
     <div>
       <h1>
         <a class="{{ 'out_of_stock' if product['stock'] == 0 }}"
-          href="{{ url_for('store.view', id=product['imdb']) }}">{{
+          href="{{ url_for('store.view', id=product['title_id']) }}">{{
           product['title'] }}</a>
         {% if product['price'] %}
         <span class="price">{{ config['CURRENCY_SYMBOL'] }}{{ "%.2f"|format(product['price']) }}</span>
