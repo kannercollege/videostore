@@ -20,7 +20,7 @@ def create_app():
         PRODUCT_NOTIF_PASSWORD=get_product_notif_password(
             os.path.join(app.instance_path, "product_notif_password.txt")
         ),
-        SEND_ORDER_NOTIFICATIONS=True,
+        SEND_ORDER_NOTIFICATION=True,
         DATABASE=os.path.join(app.instance_path, "videostore.sqlite"),
         ADMIN_USERNAMES=["admin"],
         CURRENCY_SYMBOL="€",

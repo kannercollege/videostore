@@ -10,5 +10,5 @@ pip install -r requirements.txt
 # usage
 
 ```sh
-make run
+make
 ```
