@@ -8,8 +8,9 @@ from .user import User
 
 
 def get_product_notif_password(filepath) -> str:
-    with open(filepath, "r") as f:
-        return f.read().strip()
+    if os.path.exists(filepath):
+        with open(filepath, "r") as f:
+            return f.read().strip()
 
 
 def create_app():
@@ -20,7 +21,7 @@ def create_app():
         PRODUCT_NOTIF_PASSWORD=get_product_notif_password(
             os.path.join(app.instance_path, "product_notif_password.txt")
         ),
-        SEND_ORDER_NOTIFICATION=True,
+        SEND_ORDER_NOTIFICATION=False,
         DATABASE=os.path.join(app.instance_path, "videostore.sqlite"),
         ADMIN_USERNAMES=["admin"],
         CURRENCY_SYMBOL="€",
