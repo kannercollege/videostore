@@ -12,6 +12,7 @@ states:
         opening: "greet"        
         Help: "help"
         unresolvedIntent: "unresolved"
+      return: "done"
   
   greet:
     component: "System.Output"
