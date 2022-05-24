@@ -1,0 +1,59 @@
+context:
+  variables:
+    iResult: "nlpresult"    
+
+states:
+  intent:
+    component: "System.Intent"
+    properties:
+      variable: "iResult"
+    transitions:
+      actions:
+        opening: "greet"        
+        Help: "help"
+        unresolvedIntent: "unresolved"
+  
+  greet:
+    component: "System.Output"
+    properties:
+      text: "Welkom bij ..........."
+      keepTurn: true
+    transitions:
+      next: "help"
+
+  help:
+    component: "System.Output"
+    properties:
+      text: "Via deze chatbot kan je ."
+    transitions:
+      return: "done"
+
+  unresolved:
+    component: "System.List"
+    properties:
+      prompt: "Sorry, daar kan ik je niet bij helpen. Wil je een video bestellen?"
+      options: "Ja, Nee"
+    transitions:
+      actions:
+        Ja: "toonVideos"
+        Nee: "endUnresolved"
+
+  toonVideos:
+    component: "System.CommonResponse"
+    properties:
+      keepTurn: true
+      metadata:
+        responseItems:        
+        - type: "text" 
+          text: "Mega Mindy"
+        - type: "text" 
+          text: "Batman"
+    transitions:
+      return: "done"
+     
+  endUnresolved:
+    component: "System.Output"
+    properties:
+      text: "Jammer! Kom snel terug als je wel een video wilt bestellen."
+    transitions:
+      return: "done"
