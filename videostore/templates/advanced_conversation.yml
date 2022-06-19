@@ -1,0 +1,282 @@
+main: true
+name: videostore_zzm
+context:
+  variables:
+    iResult: nlpresult
+    genresResult: string
+    videosResult: string
+    imageResult: string
+    orderedVideo: string
+    orderedImage: string
+    chosenGenre: string
+
+states: 
+
+  intent:
+    component: System.Intent
+    properties:
+      variable: iResult
+    transitions:
+      actions:
+        opening: "greet"
+        unresolvedIntent: "unresolved"
+        Help: "help"
+      return: "done"      
+  
+  greet:
+    component: "System.CommonResponse"
+    properties:     
+      keepTurn: true      
+      metadata:
+        responseItems:        
+        - type: "text" 
+          text: "Welkom bij de Videotheek, ik ben Tessa. Ik ben benieuwd naar je smaak."
+    transitions:      
+      next:
+        genres                  
+  
+  genres:
+    component: videostore.genres
+    properties:
+      variable: genresResult
+    transitions:
+      actions:
+        success: showGenres        
+      error: errorState
+  
+  showGenres:
+    component: System.CommonResponse
+    properties:
+      processUserMessage: true
+      metadata:
+        responseItems:
+          - type: cards
+            cardLayout: horizontal
+            headerText: Wat voor film wil je kijken?           
+            footerText: null
+            cards:                            
+              - title: "${genresResult.genres}"                     
+                iteratorVariable: genresResult
+                actions:
+                  - label: "ik ga voor ${genresResult.genres?lower_case}" 
+                    type: postback
+                    payload:
+                      action: videoSelection
+                      variables:
+                        chosenGenre: "${genresResult.genres}"                    
+    transitions:
+      actions:
+        videoSelection: buttonsMenu      
+
+  buttonsMenu:
+    component: "System.CommonResponse"
+    properties:
+      processUserMessage: true             
+      metadata:
+        responseItems:                
+        - type: "text" 
+          text: "Wat een goede keuze! Met wie ga je kijken?"
+          footerText:
+          actions:
+          - label: "alleen"
+            type: "postback"          
+            keyword: "1"
+            payload:
+              action: "action1"
+          - label: "met vrienden"
+            type: "postback"
+            keyword: "2"
+            payload:
+              action: "action2"               
+          - label: "met familie"
+            type: "postback"
+            keyword: "3"
+            payload:
+              action: "action3"               
+    transitions:
+      actions:
+        action1: alleen
+        action2: vrienden
+        action3: familie        
+  
+  alleen:
+    component: "System.CommonResponse"
+    properties:     
+      keepTurn: true      
+      metadata:
+        responseItems:        
+        - type: "text" 
+          text: "Wat ontspannend!"
+    transitions:      
+      next:
+        getVideo 
+
+  vrienden:
+    component: "System.CommonResponse"
+    properties:     
+      keepTurn: true      
+      metadata:
+        responseItems:        
+        - type: "text" 
+          text: "Oke, gezellig zeg!"
+    transitions:      
+      next:
+        getVideo
+        
+  familie:
+    component: "System.CommonResponse"
+    properties:     
+      keepTurn: true      
+      metadata:
+        responseItems:        
+        - type: "text" 
+          text: "Altijd fijn zo'n familiemoment!"
+    transitions:      
+      next:
+        getVideo
+  
+  
+  getVideo:
+    component: videostore.videos
+    properties:
+      variable: videosResult
+      genreID: "${chosenGenre.value}"
+    transitions:
+      actions:
+        success: showVideos
+      error: errorState
+
+  showVideos:
+    component: System.CommonResponse
+    properties:
+      processUserMessage: true
+      metadata:
+        responseItems:
+          - type: cards
+            cardLayout: horizontal
+            headerText: Ik denk dat deze film(s) wel bij je passen.            
+            footerText: null
+            cards:
+              - title: "${videosResult.title}"
+                description: "${videosResult.story}"
+                iteratorVariable: videosResult
+                actions:
+                  - label: "ik ga voor ${videosResult.title}"
+                    type: postback
+                    payload:
+                      action: imageSelection
+                      variables:
+                        orderedVideo: "${videosResult.title}"
+                        orderedImage: "${videosResult.id}"
+                    name: choose
+    transitions:
+      actions:
+        imageSelection: getImage
+      next: showVideos
+
+  getImage:
+    component: videostore.images
+    properties:
+      variable: imageResult
+      imageID: "${orderedImage.value}"
+    transitions:
+      actions:
+        success: showOrder
+      error: errorState
+
+  showOrder:
+    component: System.CommonResponse
+    properties:
+      processUserMessage: false
+      keepTurn: true
+      metadata:
+        responseItems:
+          - type: attachment            
+            attachmentType: image
+            attachmentTitle: "${orderedVideo.value}"
+            attachmentUrl: "data:image/png;base64, ${imageResult.value}"
+            footerText: "Dat is een hele goede keuze! Ik heb deze film al gezien en mij beviel deze zeker. Hier hoort eigenlijk \
+                         wel popcorn en cola bij, vind je niet? "     
+      transitions:
+        next: webview
+
+
+  webview:  
+    component: "System.Webview"
+    properties:
+      sourceVariableList: "fullname, amount"
+      prompt: "Tijd om wat lekkers te bestellen!"
+      service: "Foodcorner"      
+      variable: "webviewResponsePayload"      
+      linkLabel: "Ga naar de Foodcorner"
+      cancelLabel: "Cancel"
+    transitions:
+      next: "confirmation"
+      actions:
+        textReceived: "onCancel"
+        cancel: "onCancel"
+
+  onCancel:
+    component: "System.Output"
+    properties:
+      keepTurn: true      
+      text: "Jammer dat je vandaag geen zin hebt in iets lekker. De volgende keer beter!"
+    transitions:
+      next: "confirmation2"
+
+  confirmation:
+    component: System.CommonResponse
+    properties:
+      metadata:
+        responseItems:
+          - type: text
+            text: "Dank voor je bestelling, ${orderedVideo.value} met \
+                  ${(webviewResponsePayload.value.drink == '0')?then('',webviewResponsePayload.value.drink)}\
+                  ${(webviewResponsePayload.value.drink != '0' && webviewResponsePayload.value.drink != '0')?then(' en ', '')}
+                  ${(webviewResponsePayload.value.snack == '0')?then('',webviewResponsePayload.value.snack)} wordt zo snel mogelijk bezorgd."                  
+      processUserMessage: false
+    transitions:
+      return: done
+
+  confirmation2:
+    component: System.CommonResponse
+    properties:
+      metadata:
+        responseItems:
+          - type: text
+            text: "Verder dank voor je bestelling! ${orderedVideo.value} wordt zo snel mogelijk bezorgd."
+      processUserMessage: false
+    transitions:
+      return: done
+      
+  unresolved:
+    component: "System.List"
+    properties:
+      prompt: "Sorry, daar kan ik je niet bij helpen. Wil je een video bestellen?"
+      options: "Ja, Nee"
+    transitions:
+      actions:
+        Ja: "showGenres"
+        Nee: "endUnresolved"
+
+  endUnresolved:
+    component: "System.Output"
+    properties:
+      text: "Jammer! Kom snel terug als je wel een video wilt bestellen."
+    transitions:
+      return: "done"
+
+  errorState:
+    component: System.Output
+    properties:
+      text: "Er is iets misgegaan met de database-verbinding, sorry! Probeer opnieuw."
+      keepTurn: false
+    transitions:
+      return: done
+      
+  help:
+    component: "System.Output"
+    properties:
+      text: "Via deze chatbot kan je ."
+    transitions:
+      return: "done"
